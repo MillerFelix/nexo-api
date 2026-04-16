@@ -12,6 +12,9 @@ app.use("/usuarios", usuarioRoutes);
 const contaRoutes = require("./src/routes/contaRoutes");
 app.use("/contas", contaRoutes);
 
+const transacaoRoutes = require("./src/routes/transacaoRoutes");
+app.use("/transacoes", transacaoRoutes);
+
 const PORTA = process.env.PORT || 3000;
 app.listen(PORTA, () => {
   console.log(`Servidor rodando na porta ${PORTA}`);
