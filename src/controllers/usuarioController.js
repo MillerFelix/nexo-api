@@ -69,4 +69,39 @@ const criarUsuario = async (req, res) => {
   }
 };
 
-module.exports = { criarUsuario };
+const atualizarPerfil = async (req, res) => {
+  const usuarioLogadoId = req.usuarioIdLogado;
+
+  try {
+    const { nome, telefone, endereco } = req.body;
+
+    if (!nome) {
+      return res.status(400).json({ erro: "O nome não pode ficar em branco." });
+    }
+
+    const query = `
+            UPDATE usuarios 
+            SET nome = ?, telefone = ?, endereco = ? 
+            WHERE id = ?
+        `;
+    const valores = [nome, telefone, endereco, usuarioLogadoId];
+
+    const [resultado] = await pool.execute(query, valores);
+
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ erro: "Usuário não encontrado." });
+    }
+
+    return res.status(200).json({
+      mensagem: "Perfil atualizado com sucesso!",
+      dadosAtualizados: { nome, telefone, endereco },
+    });
+  } catch (erro) {
+    console.error("Erro ao atualizar perfil:", erro);
+    return res
+      .status(500)
+      .json({ erro: "Erro interno ao atualizar os dados." });
+  }
+};
+
+module.exports = { criarUsuario, atualizarPerfil };

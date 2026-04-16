@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const usuarioController = require("../controllers/usuarioController");
+const { verificarToken } = require("../middlewares/authMiddleware");
 
-// Quando houver uma requisição POST na rota raiz deste arquivo, chama o controller
 router.post("/", usuarioController.criarUsuario);
+
+router.put("/perfil", verificarToken, usuarioController.atualizarPerfil);
 
 module.exports = router;
