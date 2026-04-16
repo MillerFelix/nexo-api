@@ -9,6 +9,9 @@ app.use(express.json());
 const usuarioRoutes = require("./src/routes/usuarioRoutes");
 app.use("/usuarios", usuarioRoutes);
 
+const authRoutes = require("./src/routes/authRoutes");
+app.use("/auth", authRoutes);
+
 const contaRoutes = require("./src/routes/contaRoutes");
 app.use("/contas", contaRoutes);
 
